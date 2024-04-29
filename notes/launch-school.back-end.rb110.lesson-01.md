@@ -2,7 +2,7 @@
 id: 9taxto6jgd1fce2uh600s31
 title: Lesson 01
 desc: ''
-updated: 1714396609305
+updated: 1714407608470
 created: 1714334082427
 ---
 ## Collections Basics
@@ -45,7 +45,8 @@ To work with collections, must understand:
   - Strings only contain one object, the string value
     - Individual characters of a string are not objects
     - Individual characters are just part of the object that contains the string value
-
+  - Strings behave like collections in many ways, and many string methods work similarly to (and often share names with) methods for true collections
+   
 #### Array Element Reference
 - Arrays are lists of elements ordered by index
 - Elements can be any ruby object
@@ -61,7 +62,9 @@ To work with collections, must understand:
 
   my_array[1..3] # => [2, 3, 4]
   my_array.slice(1..3) # => [2, 3, 4]
-  ```
+  ```   
+   
+
 - `Array#slice` / `Array#[]` method always returns either a new array **or** a single element.
   ```
   this_array = ['a', 'b', 'c', 'd', 'e']
@@ -70,7 +73,8 @@ To work with collections, must understand:
   this_array[3..3] # => ['d']  
   this_array[3] # => 'd'
   ```
-  
+     
+
 #### Hash Element Reference
 - Composed of key-value pairs
 - Keys and values can be any ruby object
@@ -89,16 +93,16 @@ To work with collections, must understand:
 ### Element Reference Gotchas
 #### Out of Bounds Indices
 - Referencing an out-of-bounds index in a string or array returns `nil`
-  - Strings never contain `nil` (they can contain 'nil'), so a return of `nil` indicates an out-of-bounds index was used
-  - Arrays **can** contain `nil` though
+  - Strings never contain `nil` (they can contain `'nil'`), so a return of `nil` indicates an out-of-bounds index was used
+  - Arrays CAN contain `nil` though
     ```
     an_array = [3, 'd', nil]
 
     an_array[2] # => nil
     an_array[7] # => nil
     ```
-    - How to tell the difference between a valid return and an out-of-bounds reference?
-      - `Array#fetch`: "Tries to return the element at position index, but throws an IndexError exception if the referenced index lies outside of the array bounds."
+- How to tell the difference between a valid return and an out-of-bounds reference?
+    - `Array#fetch`: "Tries to return the element at position index, but throws an IndexError exception if the referenced index lies outside of the array bounds."
       ```
       an_array.fetch(2) # => nil
       an_array.fetch(7) # => IndexError: index 7 outside of array bounds: -3...3
@@ -131,4 +135,33 @@ To work with collections, must understand:
   ```
   cool_hash.fetch(:c) # => nil
   cool_hash.fetch('c') # => KeyError: key not found: "c"
+  
+### Conversion
+#### Strings and Arrays
+- Because strings and arrays share many similarities, such as both being zero-indexed collections, they can be converted into each other fairly easily.
+  ```
+  my_string = 'Practice'
+  my_string.chars # => ["P", "r", "a", "c", "t", "i", "c", "e"]
+
+  my_array = ["P", "r", "a", "c", "t", "i", "c", "e"]
+  my_array.join # => 'Practice'
+
+  question = 'How do you get to Carnegie Hall?'
+  words = question.split # => ["How", "do", "you", "get", "to", "Carnegie", "Hall?"]
+  words.join # => "HowdoyougettoCarnegieHall?"
+  words.join(' ') # => 'How do you get to Carnegie Hall?'
+  ```
+#### Hashes and Arrays
+- Hashes can be converted into nested arrays:
+  ```
+  item_colors = { sky: 'blue', grass: 'green' }
+  item_colors.to_a # => [[:sky, 'blue'], [:grass, 'green]]
+  ```
+- Arrays can be converted into hashes:
+  ```
+  details = [[:name, 'Joe'], [:age, 10], [:favorite_color, 'blue']]
+  details.to_h # => { name: 'Joe', age: 10, favorite_color: 'blue' }
+  ```
+    
+  ### Element Assignment
   
