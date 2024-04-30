@@ -2,7 +2,7 @@
 id: wzttpb1tyeuyqd4vnecsy3v
 title: Looping
 desc: ''
-updated: 1714488546587
+updated: 1714511401030
 created: 1714487288444
 ---
 ## Looping
@@ -19,6 +19,12 @@ created: 1714487288444
 
   numbers # => [2, 3, 4, 5, 6]
   ```
+### Basic Loop Elements
+  - a loop (`loop`, `for`, `while`, `until`)
+    - NB: `loop` is a method (`Kernel#loop`), but `for`, `while` and `until` are control expressions (this affects scoping rules)
+  - a counter / way to control number of iterations
+  - a way to retrieve current value
+  - a way to exit loop
 ### Controlling a Loop
 - `Kernel#loop` method with a block
 - Can use reserved word `break` to exit loop
@@ -68,9 +74,40 @@ created: 1714487288444
   counter = 0
 
   loop do
-    break if counter == alphabet.size
+    break if counter >= alphabet.size
     puts alphabet[counter]
     counter += 1
   end
   ```
-  
+#### Iterating Over Arrays
+- Example
+  ```ruby
+  objects = ['hello', :key, 10, []]
+  counter = 0
+
+  loop do
+    break if counter >= objects.size
+    puts objects[counter].class
+    counter += 1
+  end
+  ```
+  #### Iterating Over Hashes
+  - A bit more complicated due to use of key-value pairs instead of indexes. Therefore can't use a simple counter to control interation.
+    ```ruby
+    number_of_pets = {
+      'dogs' => 2,
+      'cats' => 4,
+      'fish' => 1
+    }
+
+    pets = number_of_pets.keys # => ['dogs', 'cats', 'fish']
+    counter = 0
+
+    loop do
+      break if counter == number_of_pets.size
+      current_pet = pets[counter]
+      current_pet_number = number_of_pets[current_pet]
+      puts "I have #{current_pet_number} #{current_pet}!"
+      counter += 1
+    end
+    ```
