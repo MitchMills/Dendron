@@ -1,8 +1,8 @@
 ---
 id: 9taxto6jgd1fce2uh600s31
-title: Lesson 01
+title: Collections Basics
 desc: ''
-updated: 1714407608470
+updated: 1714487081041
 created: 1714334082427
 ---
 ## Collections Basics
@@ -16,7 +16,7 @@ To work with collections, must understand:
 #### String Element Reference
 - Integer based reference (starting at 0) for each character:
 
-  ```
+  ```ruby
   my_string = 'abcde'
 
   my_string[2] # => 'c'
@@ -34,7 +34,7 @@ To work with collections, must understand:
   
 
 - `String#slice` / `String#[]` method always returns a **new string**
-    ```
+    ```ruby
     char1 = str[2]  # => "c"
     char2 = str[2]  # => "c"
     char1.object_id == char2.object_id  # => false
@@ -51,7 +51,7 @@ To work with collections, must understand:
 - Arrays are lists of elements ordered by index
 - Elements can be any ruby object
 - Integer-based reference (starting at 0) for each element
-  ```
+  ```ruby
   my_array = [1, 2, 3, 4, 5]
 
   my_array[2] # => 3
@@ -66,7 +66,7 @@ To work with collections, must understand:
    
 
 - `Array#slice` / `Array#[]` method always returns either a new array **or** a single element.
-  ```
+  ```ruby
   this_array = ['a', 'b', 'c', 'd', 'e']
 
   this_array[3, 1] # => ['d']  
@@ -82,7 +82,7 @@ To work with collections, must understand:
 - Keys must be **unique**
   - Values with identical keys get overwritten
 - Values need not be unique
-  ```
+  ```ruby
   my_hash = { :fruit => 'apple', :vegetable => 'carrot' }
 
   my_hash['fruit'] # => 'apple'
@@ -95,7 +95,7 @@ To work with collections, must understand:
 - Referencing an out-of-bounds index in a string or array returns `nil`
   - Strings never contain `nil` (they can contain `'nil'`), so a return of `nil` indicates an out-of-bounds index was used
   - Arrays CAN contain `nil` though
-    ```
+    ```ruby
     an_array = [3, 'd', nil]
 
     an_array[2] # => nil
@@ -103,14 +103,14 @@ To work with collections, must understand:
     ```
 - How to tell the difference between a valid return and an out-of-bounds reference?
     - `Array#fetch`: "Tries to return the element at position index, but throws an IndexError exception if the referenced index lies outside of the array bounds."
-      ```
+      ```ruby
       an_array.fetch(2) # => nil
       an_array.fetch(7) # => IndexError: index 7 outside of array bounds: -3...3
       an_array.fetch(7, "Uh oh") # => "Uh oh"
       ```
 #### Negative Indices
 - Negative indices start from the last index in the string or array and work backwards
-  ```
+  ```ruby
   my_string = 'abcde'
   my_string[-2] # => 'd'
   my_string[-6] # => nil
@@ -124,7 +124,7 @@ To work with collections, must understand:
 #### Invalid Hash Keys
 - Using a non-existant key returns `nil`
 - BUT, `nil` can also be a valid hash value
-  ```
+  ```ruby
   cool_hash = { :a => 1, 'b' => 'two', :c => nil }
 
   cool_hash['b'] # => 'two'
@@ -132,14 +132,14 @@ To work with collections, must understand:
   cool_hash['c'] # => nil # non-existant key
   ```
 - `Hash#fetch` wil throw a `KeyError` if a non-existant key is used.
-  ```
+  ```ruby
   cool_hash.fetch(:c) # => nil
   cool_hash.fetch('c') # => KeyError: key not found: "c"
   
 ### Conversion
 #### Strings and Arrays
 - Because strings and arrays share many similarities, such as both being zero-indexed collections, they can be converted into each other fairly easily.
-  ```
+  ```ruby
   my_string = 'Practice'
   my_string.chars # => ["P", "r", "a", "c", "t", "i", "c", "e"]
 
@@ -153,15 +153,43 @@ To work with collections, must understand:
   ```
 #### Hashes and Arrays
 - Hashes can be converted into nested arrays:
-  ```
+  ```ruby
   item_colors = { sky: 'blue', grass: 'green' }
   item_colors.to_a # => [[:sky, 'blue'], [:grass, 'green]]
   ```
 - Arrays can be converted into hashes:
-  ```
+  ```ruby
   details = [[:name, 'Joe'], [:age, 10], [:favorite_color, 'blue']]
   details.to_h # => { name: 'Joe', age: 10, favorite_color: 'blue' }
   ```
     
-  ### Element Assignment
-  
+### Element Assignment
+#### String Element Assignment
+  - `String#[]=` method
+  - Element assignment changes the value of a specific character within a string by referencing its index
+    ```ruby
+    message = "joe's favorite color is blue."
+    message[0] = 'J'
+    message # => "Joe's favorite color is blue."
+    ```
+  - String element assignment is mutating / destructive
+    
+#### Array Element Assignment
+  - `Array#[]=` method
+  - Similarly to strings, element assignment changes the value of a specific element within an array by referencing its index
+    ```ruby
+    numbers = [1, 2, 3, 4, 5]
+    numbers[0] = 2
+    numbers # => [2, 2, 3, 4, 5]
+    ```
+  - Array element assignment is mutating / destructive
+
+#### Hash Element Assignment
+  - `Hash#[]= method`
+  - Hash key is used insted of index
+    ```ruby
+    produce = { apple: 'Produce', carrot: 'Produce' }
+    produce[:apple] = 'Fruit'
+    produce # => { apple: 'Fruit', carrot: 'Produce }
+    ```
+  - Hash element assignment is mutating / destructive
