@@ -2,7 +2,7 @@
 id: pm46iz8qnr6cwr9h4iij0dw
 title: Selection Transformation
 desc: ''
-updated: 1714847134754
+updated: 1714930684783
 created: 1714846653200
 ---
 ## Selection and Transformation
@@ -20,3 +20,4 @@ created: 1714846653200
 - Manipulating every element in the collection
   - Criteria determine how to perform transformation
   - If there are n elements in a collection, transformation results in exactly n elements
+  
