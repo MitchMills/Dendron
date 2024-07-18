@@ -2,7 +2,7 @@
 id: 9taxto6jgd1fce2uh600s31
 title: Collections Basics
 desc: ''
-updated: 1714487081041
+updated: 1716818290047
 created: 1714334082427
 ---
 ## Collections Basics
@@ -85,9 +85,9 @@ To work with collections, must understand:
   ```ruby
   my_hash = { :fruit => 'apple', :vegetable => 'carrot' }
 
-  my_hash['fruit'] # => 'apple'
+  my_hash[:fruit] # => 'apple'
   my_hash.keys # => [:fruit, :vegetable]
-  my_hash.vaules # => ['apple', 'carrot']
+  my_hash.values # => ['apple', 'carrot']
   ```
 
 ### Element Reference Gotchas
