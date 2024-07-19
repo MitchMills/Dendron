@@ -2,7 +2,7 @@
 id: yh0v7rtu6siz8vov27trup2
 title: Classes and Objects 1
 desc: ''
-updated: 1721389143162
+updated: 1721398999916
 created: 1721334670575
 ---
 ## States and Behaviors
@@ -169,7 +169,7 @@ This functionality allows instance methods to expose information about the state
   ```ruby
   NoMethodError: undefined method `name' for #<GoodDog:0x007f91821239d0 @name="Sparky">
   ```
-- This means that the method that does not exist or is unavailable to the object that called it.
+- This means that the invoked method does not exist or is unavailable to the object that called it.
 - The object's name is stored in the `@name` instance variable.
 - To access it, we have to create a method that will return the name:
   ```ruby
@@ -249,4 +249,169 @@ This functionality allows instance methods to expose information about the state
   sparky.name = "Spartacus"
   puts sparky.name          # => "Spartacus"
   ```
-- NB: setter methods always
+- NB: setter methods ALWAYS return the value that is passed in as an argument, regardless of what happens inside the method.
+- Code that would normally return something other than the argument's value is ignored:
+  ```ruby
+  class Dog
+    def name=(n)
+      @name = n
+      "Laddieboy"  # value will be ignored
+    end
+  end
+
+  sparky = Dog.new()
+  puts(sparky.name = "Sparky")  # returns "Sparky"
+  ```
+- Because *getter* and *setter* methods are so commonplace, ruby has a built-in way to automatically create them, using the `Module#attr_accessor` method:
+  ```ruby
+  class GoodDog
+    attr_accessor :name
+
+    def initialize(name)
+      @name = name
+    end
+
+    def speak
+      "#{@name} says arf!"
+    end
+  end
+
+  sparky = GoodDog.new("Sparky")
+  puts sparky.speak
+  puts sparky.name            # => "Sparky"
+  sparky.name = "Spartacus"
+  puts sparky.name            # => "Spartacus"
+  ```
+- The `#attr_accessor` method takes a symbol as an argument. It uses this to create the method name for *both* the `getter` and `setter` methods.
+- The `#attr_reader` method works the same way but only allows retrieval of the instance variable, i.e. it only creates a `getter` method.
+- The `#attr_writer` method works the same way but only allows changing the instance variable, i.e. it only creates a `setter` method.
+- All the `attr_*` methods take `Symbol` objects as arguments. They can all accept multiple arguments:
+  ```ruby
+  attr_accessor :name, :height, :weight
+  ```
+### Accessor Methods in Action
+- `getter` and `setter` methods allow us to expose and change an object's state.
+- These methods can be used from within the class as well. In this example from the previous section, the `#speak` method references the `@name` instance variable:
+  ```ruby
+  def speak
+    "#{@name} says arf!"  # instance variable `@name` referenced
+  end
+  ```
+- Instead of referencing the instance variable directly (`@name`), we can use the `name` getter method created by `#attr_accessor`:
+  ```ruby
+  def speak
+    "#{name} says arf!"  # instance method `name` invoked
+  end
+  ```
+- Referencing the instance variable and calling the instance method both work in this case. However, callling the getter method is better practice.
+- Example:
+  - we are keeping track of social security numbers in instance variable `@ssn`.
+  - we don't want to expose the raw data (i.e. the entire SSN) in our application.
+  - when we retrieve the data, we only want to display the last 4 digits and mask the rest: `xxx-xx-1234`
+  - if we reference the `@ssn` instance variable directly, we then need to sprinkle our entire class with code like:
+    ```ruby
+    # converts '123-45-6789' to 'xxx-xx-6789'
+    'xxx-xx-' + @ssn.split('-').last
+    ```
+  - it is easier to define the getter method to do this, so that the formatting (and any bug fixes or changes) only happen in one place:
+    ```ruby
+    def ssn
+      'xxx-xx-' + @ssn.split('-').last
+    end
+    ```
+  - this way the `ssn` instance method can be used throughout the class to retrieve the already-formatted SSN.
+- This also holds true for the setter method. Any time the instance variable is being changed directly in the class, it's better to use the setter method instead of referencing the instance variable itself.
+  - Example:
+    - we add more states to the `GoodDog` class:
+      ```ruby
+      attr_accessor :name, :height, :weight
+      ```
+    - this one line of code produces six getter/setter instance methods (`name`, `name=`, `height`, `height=`, `weight`, `weight=`)
+    - it also produces three instance variables (`@name`, `@height`, `@weight`)
+    - now we want to create a new method that allows changing several states at once: `change_info(n, h, w)`:
+      ```ruby
+      def change_info(n, h, w)
+        @name = n
+        @height = h
+        @weight = w
+      end
+      ```
+    - our `GoodDog` class definition now looks like this:
+      ```ruby
+      class GoodDog
+        attr_accessor :name, :height, :weight
+
+        def initialize(n, h, w)
+          @name = n
+          @height = h
+          @weight = w
+        end
+
+        def speak
+          "#{name} says arf!"
+        end
+
+        def change_info(n, h, w)
+          @name = n
+          @height = h
+          @weight = w
+        end
+
+        def info
+          "#{name} weighs #{weight} and is #{height} tall."
+        end
+      end
+      ```
+    - Using the `change_info` method:
+      ```ruby
+      sparky = GoodDog.new('Sparky', '12 inches', '10 lbs')
+      puts sparky.info      # => Sparky weighs 10 lbs and is 12 inches tall.
+
+      sparky.change_info('Spartacus', '24 inches', '45 lbs')
+      puts sparky.info      # => Spartacus weighs 45 lbs and is 24 inches tall.
+      ```
+    - Instead of accessing instance variables directly to change them, we want to use setter methods instead:
+      ```ruby
+      def change_info(n, h, w)
+        name = n
+        height = h
+        weight = w
+      end
+      ```
+    - But this doesn't work:
+      ```ruby
+      sparky.change_info('Spartacus', '24 inches', '45 lbs')
+      puts sparky.info      # => Sparky weighs 10 lbs and is 12 inches tall.
+      ```
+    - What happened???
+### Calling Methods with Self
+- Ruby interpreted our `name = n` syntax as initializing a local variable, instead of as a call to the `name=` setter method that we intended.
+- we need to use the syntax `self.name=` to make it clear to ruby that we are calling a method:
+  ```ruby
+  def change_info(n, h, w)
+    self.name = n
+    self.height = h
+    self.weight = w
+  end
+
+  sparky.change_info('Spartacus', '24 inches', '45 lbs')
+  puts sparky.info  # => Spartacus weighs 45 lbs and is 24 inches tall.
+  ```
+- This syntax can also be used for getter methods, but is not required:
+  ```ruby
+  def info
+    "#{self.name} weighs #{self.weight} and is #{self.height} tall."
+  end
+  ```
+- Prefixing `self` is not restricted to accessor methods (i.e. methods created by `attr_accessor`).
+  - It can be used with any instance method.
+  - For example, the `info` method is not created by `attr_accessor`:
+    ```ruby
+    class GoodDog
+      # ... rest of code omitted for brevity
+      def some_method
+        self.info
+      end
+    end
+    ```
+  - This works, but the general rule from the Ruby Style Guide is: "Avoid `self` where not required."
