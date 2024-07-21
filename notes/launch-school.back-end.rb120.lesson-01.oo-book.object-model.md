@@ -1,8 +1,8 @@
 ---
 id: 2ky0opk5l06bm34930pdx51
-title: Object Model
+title: 01 Object Model
 desc: ''
-updated: 1721325785829
+updated: 1721562184402
 created: 1721317430358
 ---
 ## Why Object Oriented Programming?

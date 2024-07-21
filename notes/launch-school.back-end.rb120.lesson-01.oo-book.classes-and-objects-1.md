@@ -1,8 +1,8 @@
 ---
 id: yh0v7rtu6siz8vov27trup2
-title: Classes and Objects 1
+title: 02 Classes and Objects 1
 desc: ''
-updated: 1721398999916
+updated: 1721562193659
 created: 1721334670575
 ---
 ## States and Behaviors
@@ -59,7 +59,7 @@ created: 1721334670575
 ### Composition and Aggregation
 - In OOP languages, **composition** and **aggregation** are design principles
   - they are used to establish relationships between classes
-  - both involve using instance variable to hold references to other objects
+  - both involve using instance variables to hold references to other objects
     - they differ in terms of the lifecycle and ownership of the objects involved
 #### Composition
 - A relationship where an object contains one or more objects of other classes as part of its state
@@ -217,6 +217,7 @@ This functionality allows instance methods to expose information about the state
   puts sparky.get_name          # => Sparky
   sparky.set_name = "Spartacus"
   puts sparky.get_name          # => Spartacus
+  puts sparky.speak             # => Spartacus says arf!
   ```
 - The setter method is named `#set_name=`. That special `method_name=` syntax allows two ways of writing the method invocation:
   ```ruby
@@ -244,10 +245,11 @@ This functionality allows instance methods to expose information about the state
   end
 
   sparky = GoodDog.new("Sparky")
-  puts sparky.speak
+  puts sparky.speak         # => "Sparky says arf!"
   puts sparky.name          # => "Sparky"
-  sparky.name = "Spartacus"
+  sparky.name = "Spartacus" # => "Spartacus" (returns passed-in value)
   puts sparky.name          # => "Spartacus"
+  puts sparky.speak         # => "Spartacus says arf!"
   ```
 - NB: setter methods ALWAYS return the value that is passed in as an argument, regardless of what happens inside the method.
 - Code that would normally return something other than the argument's value is ignored:
@@ -277,10 +279,11 @@ This functionality allows instance methods to expose information about the state
   end
 
   sparky = GoodDog.new("Sparky")
-  puts sparky.speak
+  puts sparky.speak           # => "Sparky says arf!"
   puts sparky.name            # => "Sparky"
-  sparky.name = "Spartacus"
+  sparky.name = "Spartacus"   # => "Spartacus"
   puts sparky.name            # => "Spartacus"
+  puts sparky.speak           # => "Spartacus says arf!"
   ```
 - The `#attr_accessor` method takes a symbol as an argument. It uses this to create the method name for *both* the `getter` and `setter` methods.
 - The `#attr_reader` method works the same way but only allows retrieval of the instance variable, i.e. it only creates a `getter` method.
@@ -294,13 +297,13 @@ This functionality allows instance methods to expose information about the state
 - These methods can be used from within the class as well. In this example from the previous section, the `#speak` method references the `@name` instance variable:
   ```ruby
   def speak
-    "#{@name} says arf!"  # instance variable `@name` referenced
+    "#{@name} says arf!"  # variable reference
   end
   ```
 - Instead of referencing the instance variable directly (`@name`), we can use the `name` getter method created by `#attr_accessor`:
   ```ruby
   def speak
-    "#{name} says arf!"  # instance method `name` invoked
+    "#{name} says arf!"  # method invocation
   end
   ```
 - Referencing the instance variable and calling the instance method both work in this case. However, callling the getter method is better practice.
