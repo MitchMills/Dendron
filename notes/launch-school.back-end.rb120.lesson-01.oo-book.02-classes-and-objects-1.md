@@ -2,7 +2,7 @@
 id: yh0v7rtu6siz8vov27trup2
 title: 02 Classes and Objects 1
 desc: ''
-updated: 1721562193659
+updated: 1721643816462
 created: 1721334670575
 ---
 ## States and Behaviors
@@ -15,7 +15,7 @@ created: 1721334670575
   - behaviors
     - what objects of the class are capable of doing
       - defined as instance methods
-      - availble to objects / instances of that class
+        - availble to objects / instances of that class
 ## Initializing a New Object
 - an `#initialize` method can be included in the class definition:
   ```ruby

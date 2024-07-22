@@ -2,7 +2,7 @@
 id: 2ky0opk5l06bm34930pdx51
 title: 01 Object Model
 desc: ''
-updated: 1721562184402
+updated: 1721643008941
 created: 1721317430358
 ---
 ## Why Object Oriented Programming?
@@ -65,7 +65,7 @@ created: 1721317430358
 
     debs = GoodDog.new
     ```
-  - the above code created an instance of the `GoodDog` class and stored in in the variable `debs`.
+  - the above code created an instance of the `GoodDog` class and stored it in the variable `debs`.
     - this instance is an object
       - "`debs` is an object or instance of class `GoodDog`."
     - creating an instance from a class is called **instantiation**
