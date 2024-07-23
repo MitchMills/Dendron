@@ -2,7 +2,7 @@
 id: yh0v7rtu6siz8vov27trup2
 title: 02 Classes and Objects 1
 desc: ''
-updated: 1721643816462
+updated: 1721729973067
 created: 1721334670575
 ---
 ## States and Behaviors
@@ -157,8 +157,8 @@ created: 1721334670575
   ```
 This functionality allows instance methods to expose information about the state of the object:
   ```ruby
-  puts sparky.speak  # => "Sparky says arf!"
-  puts fido.speak    # => "Fido says arf!"
+  puts sparky.speak  # => Sparky says arf!
+  puts fido.speak    # => Fido says arf!
   ```
 ## Accessor Methods
 - If we run this code:
@@ -231,11 +231,11 @@ This functionality allows instance methods to expose information about the state
       @name = name
     end
 
-    def name      # This was renamed from "get_name"
+    def name      # This was renamed from `get_name`
       @name
     end
 
-    def name=(n)  # This was renamed from "set_name="
+    def name=(n)  # This was renamed from `set_name=`
       @name = n
     end
 
@@ -245,11 +245,11 @@ This functionality allows instance methods to expose information about the state
   end
 
   sparky = GoodDog.new("Sparky")
-  puts sparky.speak         # => "Sparky says arf!"
-  puts sparky.name          # => "Sparky"
-  sparky.name = "Spartacus" # => "Spartacus" (returns passed-in value)
-  puts sparky.name          # => "Spartacus"
-  puts sparky.speak         # => "Spartacus says arf!"
+  puts sparky.speak         # => Sparky says arf!
+  puts sparky.name          # => Sparky
+  sparky.name = "Spartacus" # => Spartacus (returns passed-in value)
+  puts sparky.name          # => Spartacus
+  puts sparky.speak         # => Spartacus says arf!
   ```
 - NB: setter methods ALWAYS return the value that is passed in as an argument, regardless of what happens inside the method.
 - Code that would normally return something other than the argument's value is ignored:
@@ -279,11 +279,11 @@ This functionality allows instance methods to expose information about the state
   end
 
   sparky = GoodDog.new("Sparky")
-  puts sparky.speak           # => "Sparky says arf!"
-  puts sparky.name            # => "Sparky"
-  sparky.name = "Spartacus"   # => "Spartacus"
-  puts sparky.name            # => "Spartacus"
-  puts sparky.speak           # => "Spartacus says arf!"
+  puts sparky.speak           # => Sparky says arf!
+  puts sparky.name            # => Sparky
+  sparky.name = "Spartacus"   # => Spartacus
+  puts sparky.name            # => Spartacus
+  puts sparky.speak           # => Spartacus says arf!
   ```
 - The `#attr_accessor` method takes a symbol as an argument. It uses this to create the method name for *both* the `getter` and `setter` methods.
 - The `#attr_reader` method works the same way but only allows retrieval of the instance variable, i.e. it only creates a `getter` method.
