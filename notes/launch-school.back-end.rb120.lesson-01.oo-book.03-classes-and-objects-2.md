@@ -2,7 +2,7 @@
 id: xpv37uyksjagfbvtsqbkuoy
 title: 03 Classes and Objects 2
 desc: ''
-updated: 1721831710238
+updated: 1721903932527
 created: 1721814781927
 ---
 ## Class Methods
@@ -134,3 +134,51 @@ created: 1721814781927
     => "This dog's name is Sparky and it is 28 in dog years."
     ```
   ### Overriding `#to_s`
+  - The behavior of `#to_s` can be customized in a class.
+  - When `#to_s` is invoked, Ruby looks up the inheritance chain for the nearest version of the method.
+  - If it has not been customized in the class of the calling object, the nearest version is usually `Object#to_s`
+  - Ruby expects `#to_s` to always return a string.
+    - If it does not, the method won't work as expected in places where `#to_s` is implicitly invoked (like `#puts` and string interpolation).
+    - If `#to_s` is defined to return something other than a string, Ruby will ignore the non-string value and look further up the inheritance chain for a version of `#to_s` that does return a string.
+      - Usually it will use the value returned by `Object#to_s`.
+    - Example: If `Foo#to_s` is defined to return the integer `42`, Ruby ignores that value and uses `Object#to_s` to supply the return value.
+      ```ruby
+      class Foo
+        def to_s
+          42
+        end
+      end
+
+      foo = Foo.new
+      puts foo      # Prints #<Foo:0x0000000100760ec0>
+      puts "foo is #{foo}" # Prints: foo is #<Foo:0x0000000100760ec0>
+      ```
+    - If `Foo#to_s` is instead defined to return a string, the return value will be supplied by `Foo#to_s`:
+      ```ruby
+      class Foo
+        def to_s
+          "42"
+        end
+      end
+
+      foo = Foo.new
+      puts foo             # Prints 42
+      puts "foo is #{foo}" # Prints: foo is 42
+      ```
+  - Note: if `#to_s` is overridden, it will only be invoked on objects of the class where the customized `#to_s` method is defined.
+```ruby
+class Bar
+  attr_reader :xyz
+  def initialize
+    @xyz = { a: 1, b: 2 }
+  end
+
+  def to_s
+    'I am a Bar object!'
+  end
+end
+
+bar = Bar.new
+puts bar      # Prints I am a Bar object!
+puts bar.xyz  # Prints {:a=>1, :b=>2}
+```
