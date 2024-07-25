@@ -2,7 +2,7 @@
 id: xpv37uyksjagfbvtsqbkuoy
 title: 03 Classes and Objects 2
 desc: ''
-updated: 1721903932527
+updated: 1721905655679
 created: 1721814781927
 ---
 ## Class Methods
@@ -153,7 +153,7 @@ created: 1721814781927
       puts foo      # Prints #<Foo:0x0000000100760ec0>
       puts "foo is #{foo}" # Prints: foo is #<Foo:0x0000000100760ec0>
       ```
-    - If `Foo#to_s` is instead defined to return a string, the return value will be supplied by `Foo#to_s`:
+    - If instead `Foo#to_s` is defined to return a string, the return value will be supplied by `Foo#to_s`:
       ```ruby
       class Foo
         def to_s
@@ -165,20 +165,24 @@ created: 1721814781927
       puts foo             # Prints 42
       puts "foo is #{foo}" # Prints: foo is 42
       ```
-  - Note: if `#to_s` is overridden, it will only be invoked on objects of the class where the customized `#to_s` method is defined.
-```ruby
-class Bar
-  attr_reader :xyz
-  def initialize
-    @xyz = { a: 1, b: 2 }
-  end
+  - NOTE: if `#to_s` is overridden, it will only be invoked on objects of the class where the customized `#to_s` method is defined.
+    ```ruby
+    class Bar
+      attr_reader :xyz
+      def initialize
+        @xyz = { a: 1, b: 2 }
+      end
 
-  def to_s
-    'I am a Bar object!'
-  end
-end
+      def to_s
+        'I am a Bar object!'
+      end
+    end
 
-bar = Bar.new
-puts bar      # Prints I am a Bar object!
-puts bar.xyz  # Prints {:a=>1, :b=>2}
-```
+    bar = Bar.new
+    puts bar      # Prints I am a Bar object!
+    puts bar.xyz  # Prints {:a=>1, :b=>2}
+    ```
+  - In the above example, the `Bar` class has a customized `to_s` method.
+  - `bar` references an object of the `Bar` class
+    - So when `puts` is called, the customized `to_s` method is invoked on `bar`.
+    
