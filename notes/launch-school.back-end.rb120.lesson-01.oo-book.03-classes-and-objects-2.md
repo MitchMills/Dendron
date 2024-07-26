@@ -2,7 +2,7 @@
 id: xpv37uyksjagfbvtsqbkuoy
 title: 03 Classes and Objects 2
 desc: ''
-updated: 1721905655679
+updated: 1721986189498
 created: 1721814781927
 ---
 ## Class Methods
@@ -184,5 +184,69 @@ created: 1721814781927
     ```
   - In the above example, the `Bar` class has a customized `to_s` method.
   - `bar` references an object of the `Bar` class
-    - So when `puts` is called, the customized `to_s` method is invoked on `bar`.
-    
+    - So when `puts` is called, and `bar` is passed in as an argument, `puts` invokes the customized `Bar#to_s` method.
+  - `bar.xyz`, however, does not return a `Bar` object
+    - it returns the value referenced by instance variable `@xyz` (`{ a: 1, b: 2 }`)
+    - so when `puts` is called, and `bar.xyz` is passed in as an argument, `puts` does **not** invoke the customized `Bar#to_s` method.
+    - `puts` will use `Object#to_s` in this case
+## More About `self`
+- `self` can refer to different things depending on where it is used
+  ### Setter Methods
+  - `self` is used when calling setter methods from within the class.
+    - this allows Ruby to correctly determine that an expression is invoking the setter method rather than initializing a local variable.
+  ### Class Method Definitions
+  - `self` acts as a reserved word and is prepended to method names when defining a class method.
+  ### Examples
+    #### Setter Methods
+    - We define the class `GoodDog`:
+      ```ruby
+      class GoodDog
+        attr_accessor :name, :height, :weight
+
+        def initialize(n, h, w)
+          self.name   = n
+          self.height = h
+          self.weight = w
+        end
+
+        def change_info(n, h, w)
+          self.name   = n
+          self.height = h
+          self.weight = w
+        end
+
+        def info
+          "#{self.name} weighs #{self.weight} and is #{self.height} tall."
+        end
+      end
+      ```
+    - We can see that `self` is used whenever we call an instance method from within the class.
+    - What does `self` represent here? We will add a new instance method to help us find out:
+      ```ruby
+      class GoodDog
+        # ... rest of code omitted for brevity
+
+        def what_is_self
+          self
+        end
+      end
+      ```
+    - We can now instantiate a new `GoodDog` object and invoke instance method `GoodDog#what_is_self` on it:
+      ```ruby
+      sparky = GoodDog.new('Sparky', '12 inches', '10 lbs')
+      p sparky.what_is_self
+      # => #<GoodDog:0x007f83ac062b38 @name="Sparky", @height="12 inches", @weight="10 lbs">
+      ```
+    - So from within a class, when an instance method uses `self`, it references the *calling object*.
+      - In the above example, `self` references the `GoodDog` object assigned to `sparky`.
+      - So from within the `change_info` method, calling `self.name=` acts the same as calling `sparky.name=` from *outside* the class.
+        - `sparky.name` can't be called from within the class; `sparky` is out of scope.
+    #### Class Method Definitions
+      - When `self` is prepended to a mtehod definition, it defines a **class method**:
+      ```ruby
+      class MyAwesomeClass
+        def self.this_is_a_class_method
+        end
+      end
+      ```
+
