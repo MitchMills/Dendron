@@ -2,7 +2,7 @@
 id: xpv37uyksjagfbvtsqbkuoy
 title: 03 Classes and Objects 2
 desc: ''
-updated: 1721986189498
+updated: 1722102139055
 created: 1721814781927
 ---
 ## Class Methods
@@ -242,11 +242,33 @@ created: 1721814781927
       - So from within the `change_info` method, calling `self.name=` acts the same as calling `sparky.name=` from *outside* the class.
         - `sparky.name` can't be called from within the class; `sparky` is out of scope.
     #### Class Method Definitions
-      - When `self` is prepended to a mtehod definition, it defines a **class method**:
+      - When `self` is prepended to a method definition, it defines a **class method**:
       ```ruby
       class MyAwesomeClass
         def self.this_is_a_class_method
+          # method definition
         end
       end
       ```
-
+      - We can add a line to the `GoodDog` class to demonstrate what `self` references in this context:
+      ```ruby
+      class GoodDog
+        # ... rest of code omitted for brevity
+        puts self
+      end
+      ```
+      - The result of running the file:
+        ```ruby
+        GoodDog
+        ```
+      - So using `self` inside a class but outside an instance method references the class itself.
+      - In other words, a method definition prefixed with `self` is the same as defining a method on the class.
+        - e.g. `def self.a_method` is equivalent to `def GoodDog.a_method`
+      - Using `self.a_method` rather than `ClassName.a_method` is a convention.
+        - It allows changing the class name in one place rather than for every class method definition.
+  ### Uses of `self` Summary
+  - Inside an instance method, `self` references the instance (object) that called the method (i.e. the calling object).
+  - Inside a class definition but outside of an instance method, `self` references the class and can be used to define class methods.
+  - `self` is a way of being explicit about what a program is referencing and what our intentions are as far as behavior.
+    - `self` changes depending on the scope it is used in.
+    
