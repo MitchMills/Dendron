@@ -2,7 +2,7 @@
 id: 2ky0opk5l06bm34930pdx51
 title: 01 Object Model
 desc: ''
-updated: 1721643008941
+updated: 1722258551308
 created: 1721317430358
 ---
 ## Why Object Oriented Programming?
@@ -14,7 +14,7 @@ created: 1721317430358
     - dependencies throughout a program mean any changes or bugs can affect entire program
 
   - OOP is a way to create containers for data so that:
-    - data can be change and manipulated without affecting the entire program
+    - data can be changed and manipulated without affecting the entire program
     - programs become the interaction of many small parts
   instead of one massive blob of dependencies
 ### OOP Terminology
@@ -67,7 +67,7 @@ created: 1721317430358
     ```
   - the above code created an instance of the `GoodDog` class and stored it in the variable `debs`.
     - this instance is an object
-      - "`debs` is an object or instance of class `GoodDog`."
+      - "`debs` references an object or instance of class `GoodDog`."
     - creating an instance from a class is called **instantiation**
       - "we have instantiated an object called `debs` from the class `GoodDog`."
     - an object is returned by calling the class method `#new`
