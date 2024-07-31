@@ -2,7 +2,7 @@
 id: 2ky0opk5l06bm34930pdx51
 title: 01 Object Model
 desc: ''
-updated: 1722258551308
+updated: 1722285341400
 created: 1721317430358
 ---
 ## Why Object Oriented Programming?
@@ -56,9 +56,9 @@ created: 1721317430358
 - ruby defines the attributes and behaviors of its objects in **classes**
 - classes: basic outlines of what an object should be made of and what it should be able to do
 - syntax for defining a class:
-  - use CamelCase for the name
   - use the `class` reserved word
-    ```ruby
+  - use CamelCase for the name
+      ```ruby
     class GoodDog
       # attributes and behaviors
     end
@@ -73,7 +73,10 @@ created: 1721317430358
     - an object is returned by calling the class method `#new`
 ### Modules
 - a **module** is a collection of behaviors that is usuable in other classes via **mixins**
-  - a module is "mixed in" to a class using the `Module#include` method invocation.
+- syntax for defining a module:
+  - use the `module` reserved word
+  - use CamelCase for the name
+- a module is "mixed in" to a class using the `Module#include` method invocation.
   - Example:
     ```ruby
     module Speak

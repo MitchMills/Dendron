@@ -2,7 +2,7 @@
 id: yh0v7rtu6siz8vov27trup2
 title: 02 Classes and Objects 1
 desc: ''
-updated: 1721729973067
+updated: 1722285983386
 created: 1721334670575
 ---
 ## States and Behaviors
@@ -89,7 +89,7 @@ created: 1721334670575
   my_car = Car.new
   my_car.start  # Engine is an integral part of Car
   ```
-  - In this example, `Car` has an `Engine`, and instances of `Car` contain `Engine` objects
+  - In this example, `Car` has an `Engine`, and all instances of `Car` contain an `Engine` object
   - When a new instance of `Car` is instantiated, a new instance of `Engine` is also instantiated.
   - When a `Car` object is destroyed, the composed `Engine` object is also destroyed.
 - A container has a "**has-a relationship**" to its composed objects. I.e., the container "has a" composed object.
